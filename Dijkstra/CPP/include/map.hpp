@@ -6,7 +6,8 @@
 
 using namespace std;
 
-class Map {
+class Map 
+{
 public:
     vector<vector<int>> grid;
     set<pair<int, int>> obstacles;

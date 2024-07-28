@@ -12,13 +12,15 @@
 
 using namespace std;
 
-struct PlanNode {
+struct PlanNode 
+{
     std::pair<int, int> directions;
     double cost;
     PlanNode(std::pair<int, int> dir, double c) : directions(dir), cost(c) {}
 };
 
-class Dijkstra {
+class Dijkstra 
+{
 public:
     Dijkstra(std::vector<std::vector<int>> grid, std::pair<int, int> start, std::pair<int, int> goal, int radius, int board_size)
         : grid(grid), start(start), goal(goal), radius(radius), board_size(board_size) {}

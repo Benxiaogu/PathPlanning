@@ -1,5 +1,6 @@
 function [cost, path, visit_order] = dijkstra(grid, start_node, goal_node)
     % Dijkstra's algorithm implementation in MATLAB
+    
     % Input: 
     %   grid - The grid map (0 = free space, 1 = obstacle)
     %   start_node - The start node [row, col]

@@ -3,7 +3,7 @@ rows = 30;
 cols = 50;
 grid = zeros(rows, cols);
 
-% Add obstacles to the grid using cell arrays
+% Add obstacles to the grid
 obstacles = {
     1:30, 1;
     1:30, 50;

@@ -20,7 +20,6 @@ if __name__ == '__main__':
         obstacle.append((row,45))
     
     grid = map.grid_map_user_defined(width,height,board_size,obstacle)
-    # map.save_map()
 
     # Set the start and goal point
     start = (10,10)

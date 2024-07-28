@@ -20,7 +20,6 @@ function visualize_grid(grid, path, cost, visited, start, goal)
     if isempty(path)
         error('Path is empty or invalid.');
     end
-    
     % Check if path indices are within grid bounds
     if any(path(:,1) < 1 | path(:,1) > rows) || any(path(:,2) < 1 | path(:,2) > cols)
         error('Path indices are out of bounds.');

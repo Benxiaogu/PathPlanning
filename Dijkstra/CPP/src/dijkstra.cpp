@@ -16,7 +16,8 @@ std::tuple<vector<pair<int, int>>, vector<double>> Dijkstra::get_neighbors(pair<
     vector<double> distances;
     vector<PlanNode> nexts = {PlanNode({-1, 0}, 1), PlanNode({-1, 1}, sqrt(2)), PlanNode({0, 1}, 1), PlanNode({1, 1}, sqrt(2)),
                           PlanNode({1, 0}, 1), PlanNode({1, -1}, sqrt(2)), PlanNode({0, -1}, 1), PlanNode({-1, -1}, sqrt(2))};
-    for (auto& next : nexts) {
+    for (auto& next : nexts) 
+    {
         pair<int, int> neighbor = {node.first + next.directions.first, node.second + next.directions.second};
         if (0 <= neighbor.first && neighbor.first < grid.size() && 0 <= neighbor.second && neighbor.second < grid[0].size()) {
             if (grid[neighbor.first][neighbor.second] == 0) {
@@ -25,7 +26,8 @@ std::tuple<vector<pair<int, int>>, vector<double>> Dijkstra::get_neighbors(pair<
                         neighbors.push_back(neighbor);
                         distances.push_back(next.cost);
                     }
-                } else {
+                } 
+                else {
                     neighbors.push_back(neighbor);
                     distances.push_back(next.cost);
                 }
@@ -42,7 +44,8 @@ double Dijkstra::plan() {
     map<pair<int, int>, pair<int, int>> previous_nodes;
     costs[start] = 0;
 
-    while (!priority_queue.empty()) {
+    while (!priority_queue.empty()) 
+    {
         auto [current_cost, current_node] = priority_queue.top();
         priority_queue.pop();
 
@@ -57,7 +60,8 @@ double Dijkstra::plan() {
         vector<double> distances;
         tie(neighbors,distances) = get_neighbors(current_node);
 
-        for (size_t i=0; i<neighbors.size();++i) {
+        for (size_t i=0; i<neighbors.size();++i) 
+        {
             pair<int, int> neighbor = neighbors[i];
             double distance = distances[i];
             double cost = current_cost + distance;
@@ -72,7 +76,8 @@ double Dijkstra::plan() {
 
     path.clear();
     pair<int, int> current_node = goal;
-    while (current_node != start) {
+    while (current_node != start) 
+    {
         path.push_back(current_node);
         current_node = previous_nodes[current_node];
         std::cout<<"node: "<<current_node.first<<","<<current_node.second<<" ";
@@ -108,8 +113,10 @@ void Dijkstra::visualize_grid(double cost) {
     putText(img, cost_text, Point(500, 80), FONT_HERSHEY_SIMPLEX, 0.8, Scalar(0, 0, 0), 2);
 
     // Draw Obstacles
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
+    for (int i = 0; i < rows; ++i) 
+    {
+        for (int j = 0; j < cols; ++j) 
+        {
             if (grid[i][j] == 1) {
                 rectangle(img, Point(j * cell_size, i * cell_size),
                           Point((j + 1) * cell_size, (i + 1) * cell_size),
@@ -128,7 +135,8 @@ void Dijkstra::visualize_grid(double cost) {
             Scalar(0, 255, 255), FILLED);
 
     // Draw visited areas
-    for (size_t i=1;i<visit_order.size()-1;++i) {
+    for (size_t i=1;i<visit_order.size()-1;++i) 
+    {
         const auto& node = visit_order[i];
         rectangle(img, Point(node.second * cell_size, node.first * cell_size),
         Point((node.second + 1) * cell_size, (node.first + 1) * cell_size),
@@ -138,7 +146,8 @@ void Dijkstra::visualize_grid(double cost) {
     }
 
     // Draw path
-    for (size_t i = 1; i < path.size(); ++i) {
+    for (size_t i = 1; i < path.size(); ++i) 
+    {
         Point p1(path[i - 1].second * cell_size + cell_size / 2,
                 path[i - 1].first * cell_size + cell_size / 2);
         Point p2(path[i].second * cell_size + cell_size / 2,

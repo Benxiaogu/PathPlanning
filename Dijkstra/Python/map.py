@@ -38,7 +38,6 @@ class Map:
         if self.grid:
             map = np.array(self.grid)
             plt.imshow(map, cmap='Greys', origin='lower')
-            # plt.savefig("girdmap.png",bbox_inches='tight',pad_inches=0)
             plt.savefig("gridmap.png")
             # plt.show()
         else:

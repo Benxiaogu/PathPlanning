@@ -1,4 +1,5 @@
 classdef PriorityQueue < handle
+    % PriorityQueue defined
     properties
         elements = {};
         priorities = [];

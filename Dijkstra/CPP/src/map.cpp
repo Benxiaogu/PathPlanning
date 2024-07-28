@@ -16,7 +16,6 @@ vector<vector<int>> Map::grid_map_user_defined(int width, int height, int board_
         this->obstacles.insert({k, board_size});
         this->obstacles.insert({k, width - 1 - board_size});
     }
-
     for (const auto& obstacle : this->obstacles) {
         grid[obstacle.first][obstacle.second] = 1;
     }

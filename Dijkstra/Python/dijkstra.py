@@ -2,7 +2,6 @@ import heapq
 import math
 import numpy as np
 import matplotlib.pyplot as plt
-# import matplotlib.patches as patches
 import matplotlib.animation as animation
 
 class Dijkstra:
@@ -115,6 +114,7 @@ class Dijkstra:
                 path_line.set_data(path_y, path_x)
 
             return visited_patches + [path_line]*10
+    
         plt.title("Dijkstra\n"+"Cost: "+str(cost))
         ani = animation.FuncAnimation(fig, update, frames=len(self.visit_order) + 10, interval=10, repeat=False)
         ani.save("map_animate.mp4",writer='ffmpeg')
