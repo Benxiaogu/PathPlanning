@@ -1,0 +1,5 @@
+./Dijkstra/CPP/build
+./Dijkstra/.vscode
+./Dijkstra/Python/*.png
+./Dijkstra/__pycache__
+./Dijkstra/*.mp4
