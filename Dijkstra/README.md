@@ -5,6 +5,8 @@ We have implemented the Dijkstra algorithm using C++, Python and Matlab.
 
 https://www.bilibili.com/video/BV1hKvFeaEya/?spm_id_from=333.999.0.0&vd_source=9e51c239510424a92903fe86ed4d9e71
 
+
+
 ## 1.CPP
 
 Build
@@ -36,6 +38,8 @@ python pathplanning.py
 ```
 
 ![](https://s2.loli.net/2024/07/29/a6pVbeMCDlXI7H5.png)
+
+![](https://s2.loli.net/2024/07/29/YfJtWI6zrXbnHhl.gif)
 
 ## 3.Matlab
 
