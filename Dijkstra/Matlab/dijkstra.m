@@ -67,8 +67,7 @@ function [cost, path, visit_order] = dijkstra(grid, start_node, goal_node)
             cost = current_cost + distance;
             
             % If the neighbor has not been visited or a cheaper cost is found
-            % if ~isKey(costs, neighbor_key) || cost < costs(neighbor_key)
-            if ~isKey(costs, neighbor_key)
+            if ~isKey(costs, neighbor_key) || cost < costs(neighbor_key)
                 costs(neighbor_key) = cost;
                 previous_nodes(neighbor_key) = current_node;
                 priority_queue = [priority_queue; cost, neighbor];
