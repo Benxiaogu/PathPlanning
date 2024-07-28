@@ -1,5 +1,9 @@
-./Dijkstra/CPP/build
-./Dijkstra/.vscode
+./Dijkstra/CPP/build/
+./Dijkstra/.vscode/
 ./Dijkstra/Python/*.png
-./Dijkstra/__pycache__
-./Dijkstra/*.mp4
+./Dijkstra/Python/__pycache__/
+./Dijkstra/Python/*.mp4
+./Dijkstra/Python/*.gif
+./Dijkstra/Matlab/*.png
+./Dijkstra/Matlab/*.asv
+./Dijkstra/Matlab/d.m
