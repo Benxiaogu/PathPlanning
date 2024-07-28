@@ -1,3 +1,3 @@
-# RoadPlanning
+# PathPlanning
 
-Use Dijkstra, A*, RRT and so on to plan the path
+Use algorithms such as Dijkstra, A*, RRT and more to plan path
