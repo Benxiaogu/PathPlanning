@@ -44,4 +44,4 @@ cd PathPlanning/Dijkstra/Matlab
 matlab -batch "main"
 ```
 
-![](https://s2.loli.net/2024/07/29/cfPYxHwq6NklaMI.png)
+![](https://s2.loli.net/2024/07/29/cguaQRJ5TYKMBEU.png)
