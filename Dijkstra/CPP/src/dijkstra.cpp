@@ -80,8 +80,6 @@ double Dijkstra::plan() {
     {
         path.push_back(current_node);
         current_node = previous_nodes[current_node];
-        std::cout<<"node: "<<current_node.first<<","<<current_node.second<<" ";
-        printf("cost:%lf\n",costs[current_node]);
     }
     path.push_back(start);
     reverse(path.begin(), path.end());
