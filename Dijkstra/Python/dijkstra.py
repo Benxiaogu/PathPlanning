@@ -57,8 +57,8 @@ class Dijkstra:
             # Find passable neighbors
             neighbors, distances = self.get_neighbors(current_node)
             for neighbor,distance in zip(neighbors,distances):
-                if neighbor[0] == -1:
-                    continue
+                # if neighbor[0] == -1:
+                #     continue
                 # Compute the cost from the start point
                 cost = current_cost + distance
                 # Store cost and update to minimum value
@@ -117,6 +117,7 @@ class Dijkstra:
     
         plt.title("Dijkstra\n"+"Cost: "+str(cost))
         ani = animation.FuncAnimation(fig, update, frames=len(self.visit_order) + 10, interval=10, repeat=False)
+        # ani.save("map_animate.gif",writer='pillow')
         ani.save("map_animate.mp4",writer='ffmpeg')
 
         plt.savefig("map_animate.png",bbox_inches='tight')
