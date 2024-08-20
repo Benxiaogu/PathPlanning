@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../include/jps.hpp
+iostream
+-
+vector
+-
+set
+-
+map
+-
+
+/home/dawn/workspace/PathPlanning/JPS/CPP/src/jps.cpp
+jps.hpp
+/home/dawn/workspace/PathPlanning/JPS/CPP/src/jps.hpp
+iostream
+-
+queue
+-
+set
+-
+map
+-
+algorithm
+-
+opencv2/opencv.hpp
+-
+
