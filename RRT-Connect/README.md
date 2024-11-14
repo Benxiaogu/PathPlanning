@@ -13,7 +13,7 @@ The code for this algorithm is as follows:
 **Build**
 
 ```bash
-cd PathPlanning/RRT-/CPP
+cd PathPlanning/RRT-Connect/CPP
 mkdir build && cd build
 cmake ..
 make
@@ -21,7 +21,25 @@ make
 
 **Run**
 
+In the "build" directory
+
 ```bash
 ./rrtconnect
 ```
 
+The result for rrtconnect:
+
+![](https://s2.loli.net/2024/11/14/Q7fz9y6EADNtjZk.png)
+
+## 2.Python
+
+**Run**
+
+```bash
+cd PathPlanning/RRT-Connect/Python
+python demo.py
+```
+
+The result for rrtconnect:
+
+![](https://s2.loli.net/2024/11/14/yheqQk2gR4f7X5o.gif)
