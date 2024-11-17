@@ -1,3 +1,13 @@
+"""
+  @File: rrt.py
+  @Brief: RRT algorithm for pathplanning
+ 
+  @Author: Benxiaogu
+  @Github: https://github.com/Benxiaogu
+  @CSDN: https://blog.csdn.net/weixin_51995147?type=blog
+ 
+  @Date: 2024-11-13
+"""
 import numpy as np
 import random
 import math
@@ -8,8 +18,8 @@ import matplotlib.patches as patches
 
 class RRT:
     def __init__(self,start,goal,obstacles,board_size,max_try,max_dist,goal_sample_rate,env) -> None:
-        self.start = self.Node(start,None,0)
-        self.goal = self.Node(goal,None,0)
+        self.start = self.Node(start,start,0)
+        self.goal = self.Node(goal,goal,0)
         self.obstacles = obstacles
         self.board_size = board_size
         self.max_try = max_try # Number of iterations
@@ -18,6 +28,8 @@ class RRT:
         self.env = env
         self.inflation = 1
         self.searched = []
+    def __str__(self) -> str:
+        return "RRT"
 
     class Node:
         def __init__(self,position,parent,cost) -> None:
@@ -27,7 +39,7 @@ class RRT:
 
     def run(self):
         cost,path = self.plan()
-        self.visualize(cost,path)
+        self.visualize(str(self),cost,path)
 
     def plan(self):
         self.searched.append(self.start)
@@ -49,7 +61,7 @@ class RRT:
                 # Found goal successfully
                 if dist <= self.max_dist and not self.isCollision(node_new,self.goal):
                     self.searched.append(self.goal)
-                    self.goal.parent = node_new
+                    self.goal.parent = node_new.position
                     self.goal.cost = node_new.cost + self.distance(self.goal,node_new)
                     closed_list[self.goal.position] = self.goal
                     cost, path= self.extractPath(closed_list)
@@ -65,9 +77,9 @@ class RRT:
         """
         if random.random()>self.goal_sample_rate:
             node = self.Node(
-                (random.uniform(0,self.env.height),random.uniform(0,self.env.width)),None,0)
+                (random.uniform(self.inflation,self.env.height-self.inflation),random.uniform(self.inflation,self.env.width-self.inflation)),None,0)
         else:
-            node = self.Node(self.goal.position,None,0)
+            node = self.goal
             
         return node
 
@@ -91,7 +103,7 @@ class RRT:
         d = min(self.max_dist,dist)
         position = ((node_near.position[0]+d*math.cos(theta)),node_near.position[1]+d*math.sin(theta))
 
-        node_new = self.Node(position,node_near,node_near.cost+d)
+        node_new = self.Node(position,node_near.position,node_near.cost+d)
 
         if self.isCollision(node_new, node_near):
             return None
@@ -126,11 +138,11 @@ class RRT:
         """
         x,y = node.position[0],node.position[1]
         for (ox,oy,w,h) in self.env.boundary:
-            if ox-self.inflation<x<ox+w+self.inflation and oy-self.inflation<y<oy+h+self.inflation:
+            if ox-self.inflation<=x<=ox+w+self.inflation and oy-self.inflation<=y<=oy+h+self.inflation:
                 return True
         
         for (ox,oy,w,h) in self.env.obs_rectangle:
-            if ox-self.inflation<x<ox+w+self.inflation and oy-self.inflation<y<oy+h+self.inflation:
+            if ox-self.inflation<=x<=ox+w+self.inflation and oy-self.inflation<=y<=oy+h+self.inflation:
                 return True
             
         for (ox,oy,r) in self.env.obs_circle:
@@ -153,19 +165,19 @@ class RRT:
         x1,y1 = node1.position
         x2,y2 = node2.position
 
-        def cross(p1,p2,p3):
-            x1 = p2[0]-p1[0]
-            y1 = p2[1]-p1[1]
-            x2 = p3[0]-p1[0]
-            y2 = p3[1]-p1[0]
-            return x1*y2 - x2*y1
+        # def cross(p1,p2,p3):
+        #     x1 = p2[0]-p1[0]
+        #     y1 = p2[1]-p1[1]
+        #     x2 = p3[0]-p1[0]
+        #     y2 = p3[1]-p1[0]
+        #     return x1*y2 - x2*y1
         
         for v1,v2 in combinations(vertex,2):
             if max(x1,x2) >= min(v1[0],v2[0]) and min(x1,x2)<=max(v1[0],v2[0]) and \
                 max(y1,y2) >= min(v1[1],v2[1]) and min(y1,y2) <= max(v1[1],v2[1]):
-                if cross(v1,v2,node1.position) * cross(v1,v2,node2.position)<=0 and \
-                    cross(node1.position,node2.position,v1) * cross(node1.position,node2.position,v2)<=0:
-                    return True
+                # if cross(v1,v2,node1.position) * cross(v1,v2,node2.position)<=0 and \
+                    # cross(node1.position,node2.position,v1) * cross(node1.position,node2.position,v2)<=0:
+                return True
     
         return False
     
@@ -177,9 +189,13 @@ class RRT:
 
         dx = node2.position[0] - node1.position[0]
         dy = node2.position[1] - node1.position[1]
+
+        d = dx * dx + dy * dy
+        if d==0:
+            return False
             
         # Projection
-        t = ((ox - node1.position[0]) * dx + (oy - node1.position[1]) * dy) / (dx * dx + dy * dy)
+        t = ((ox - node1.position[0]) * dx + (oy - node1.position[1]) * dy) / d
         
         # The projection point is on line segment AB
         if 0 <= t <= 1:
@@ -200,15 +216,15 @@ class RRT:
         node = closed_list[self.goal.position]
         path = [node.position]
         cost = node.cost
-        while node != self.start:
+        while node.position != self.start.position:
             parent = node.parent
-            node_parent = closed_list[parent.position]
+            node_parent = closed_list[parent]
             node = node_parent
             path.append(node.position)
 
         return cost,path
 
-    def visualize(self, cost, path):
+    def visualize(self, name, cost, path):
         """
             Plot the map.
         """
@@ -216,7 +232,7 @@ class RRT:
         ax.set_xlim(-self.board_size, self.env.width+self.board_size)
         ax.set_ylim(-self.board_size, self.env.height+self.board_size)
 
-        plt.title("RRT\n"+"Cost: "+str(cost))
+        plt.title(name +"\nCost: "+str(cost))
 
         # Draw rectangle obstacles
         for (ox, oy, w, h) in self.env.obs_rectangle:
@@ -242,13 +258,13 @@ class RRT:
                 node = self.searched[frame]
                 if node.parent is not None:
                     parent = node.parent
-                    ax.plot([node.position[0], parent.position[0]], [node.position[1], parent.position[1]], 'g-', alpha=0.5)
+                    ax.plot([node.position[0], parent[0]], [node.position[1], parent[1]], 'g-', alpha=0.5)
             elif path:
                 path_x, path_y = zip(*path)
                 path_line.set_data(path_x, path_y)
         
         ani = animation.FuncAnimation(fig, update, frames=len(self.searched)+10, interval=50, repeat=False)
-        ani.save("rrt_tree.gif", writer='pillow')
-        plt.savefig("rrt_tree.png", bbox_inches='tight')
+        ani.save(f"{str(self).lower()}.gif", writer='pillow')
+        plt.savefig(f"{str(self).lower()}.png", bbox_inches='tight')
         plt.legend()
         plt.show()
